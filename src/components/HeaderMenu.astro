@@ -1,0 +1,73 @@
+---
+export interface Props {
+    href?: string | URL;
+    label: string;
+}
+
+const { href = "#", label } = Astro.props;
+---
+
+<div class="header-menu">
+    <a href={href}>{label}</a>
+    <div class="extra">
+        <main>
+            <slot />
+        </main>
+    </div>
+</div>
+
+<style>
+    .header-menu {
+        anchor-scope: --menu-button;
+
+        > a {
+            display: inline-block;
+            anchor-name: --menu-button;
+            text-decoration: none;
+            background-color: transparent;
+            height: 2em;
+            align-content: center;
+            padding-inline: 0.6em;
+            padding-block: 0.2em;
+            border: 0.1em solid transparent;
+            box-sizing: border-box;
+
+            &:hover {
+                background-color: var(--theme-control-md);
+                border-color: var(--theme-outline-md);
+            }
+        }
+
+        > .extra {
+            display: none;
+            position: absolute;
+            background-color: var(--theme-container-lo);
+            left: calc(anchor(--menu-button left) - 1em);
+            top: calc(anchor(--menu-button bottom) - 0.1em);
+            margin-inline: 1em;
+            border: 0.1em solid var(--theme-outline-md);
+            box-sizing: border-box;
+
+            > main {
+                position: relative;
+            }
+        }
+
+        &:has(.extra > main > *):hover,
+        &:has(.extra > main > *):focus-within {
+            > a {
+                background-color: var(--theme-control-lo);
+                border-color: var(--theme-outline-md);
+            }
+
+            > .extra:has(main > *) {
+                display: block;
+            }
+        }
+
+        > a:active {
+            background-color: var(--theme-control-hi) !important;
+            border-color: var(--theme-outline-hi) !important;
+        }
+    }
+</style>

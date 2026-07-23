@@ -1,0 +1,38 @@
+---
+import Logo from "../images/logo.svg";
+---
+
+<a href="/" class="brand">
+    <Logo width={64} height={64} />
+    <div class="divider"></div>
+    <div class="text">
+        Nahara's<br />Organization
+    </div>
+</a>
+
+<style>
+    .brand {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1em;
+        text-decoration: none;
+        color: var(--theme-foreground);
+
+        > svg {
+            fill: currentColor;
+        }
+
+        > .text {
+            font-size: 1.125em;
+            font-weight: 600;
+        }
+
+        > .divider {
+            width: 0.1em;
+            height: 2.5em;
+            background-color: var(--theme-foreground);
+            print-color-adjust: exact;
+        }
+    }
+</style>

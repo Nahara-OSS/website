@@ -1,0 +1,131 @@
+---
+import Layout from "../layouts/Layout.astro";
+import tabletMaid from "../images/tablet-maid.png";
+import { Image } from "astro:assets";
+---
+
+<Layout title="Not found" description="Either the link is incorrect or the content has been removed...">
+    <div class="card">
+        <div class="left">
+            <div class="outer-frame">
+                <div class="inner-frame">
+                    <Image src={tabletMaid} alt={'"Tablet Maid" by @nahkd'} width={640} layout="fixed" priority />
+                </div>
+                <div class="credits">
+                    <span><strong>Tablet Maid</strong> by @nahkd</span>
+                    <span>CC-BY-SA 4.0</span>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <h1>404</h1>
+            <h2>Not found</h2>
+            <p>Are you sure the link is correct? Or maybe it has been removed...</p>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .card {
+        width: 100%;
+        height: 100dvh;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 4em;
+        overflow: hidden;
+
+        > .left {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+            justify-content: center;
+
+            > .outer-frame {
+                position: relative;
+                rotate: 7deg;
+                border: 0.1em solid var(--theme-outline-md);
+                box-shadow: 0 0 4em #0000000f;
+
+                > .inner-frame {
+                    background-color: var(--theme-container-lo);
+                    border: 1em solid transparent;
+
+                    > img {
+                        border: 0.1em solid var(--theme-outline-lo);
+                    }
+                }
+
+                > .credits {
+                    position: absolute;
+                    left: 2em;
+                    bottom: 2em;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.2em;
+                    align-items: start;
+
+                    > span {
+                        background-color: var(--theme-container-lo);
+                        border: 0.1em solid var(--theme-outline-lo);
+                        box-shadow: 0 0 1em #00000007;
+                        height: 2em;
+                        align-content: center;
+                        padding-block: 0.2em;
+                        padding-inline: 0.6em;
+                        box-sizing: border-box;
+                        font-size: 0.75em;
+
+                        &:nth-child(1) {
+                            rotate: -3deg;
+                        }
+
+                        &:nth-child(2) {
+                            rotate: 2deg;
+                        }
+                    }
+                }
+            }
+        }
+
+        > .right {
+            width: 100%;
+            padding: 2em;
+            align-content: center;
+            box-sizing: border-box;
+        }
+    }
+
+    @media (max-width: 1000px) {
+        .card {
+            grid-template-columns: unset;
+            grid-template-rows: repeat(2, 1fr);
+
+            > .left > .outer-frame {
+                width: 100%;
+                rotate: 0deg;
+                border: 0;
+                box-shadow: none;
+
+                > .inner-frame {
+                    border: 0;
+
+                    > img {
+                        border: 0;
+                        width: 100%;
+                        object-fit: cover;
+                        object-position: left;
+                    }
+                }
+
+                > .credits {
+                    left: 2em;
+                    bottom: 2em;
+
+                    > span {
+                        rotate: 0deg !important;
+                    }
+                }
+            }
+        }
+    }
+</style>

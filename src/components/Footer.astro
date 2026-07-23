@@ -1,0 +1,140 @@
+---
+import { Image } from "astro:assets";
+import Brand from "./Brand.astro";
+
+const license = "Creative Commons Attribution-ShareAlike 4.0 International";
+const licenseUrl = "https://creativecommons.org/licenses/by-sa/4.0/";
+---
+
+<footer>
+    <main>
+        <div class="wide">
+            <Brand />
+            <p class="muted hide-in-print">
+                Static pages generated with {Astro.generator}. JavaScript is not required to use this website.
+            </p>
+            <p class="muted">
+                Except where otherwise noted, content on this site is licensed under <a href={licenseUrl}>{license}</a>.
+            </p>
+            <a href={licenseUrl} class="cc-badges" title={license}>
+                <Image
+                    src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"
+                    width={16}
+                    height={16}
+                    alt="Creative Commons Badge"
+                />
+                <Image
+                    src="https://mirrors.creativecommons.org/presskit/icons/by.svg"
+                    width={16}
+                    height={16}
+                    alt="Attribution Badge"
+                />
+                <Image
+                    src="https://mirrors.creativecommons.org/presskit/icons/sa.svg"
+                    width={16}
+                    height={16}
+                    alt="ShareAlike Badge"
+                />
+            </a>
+        </div>
+        <div class="hide-in-print">
+            <div>
+                <span class="label">This website</span>
+                <a href="/">Homepage</a>
+                <a href="/software">Software</a>
+                <a href="/blog">Blog</a>
+                <a href="/about">About</a>
+            </div>
+        </div>
+        <div class="hide-in-print">
+            <div>
+                <span class="label">Software</span>
+                <a href="/motion">Nahara's Motion</a>
+                <a href="/sketchpad">Nahara's Sketchpad</a>
+            </div>
+        </div>
+        <div class="hide-in-print">
+            <div>
+                <span class="label">External links</span>
+                <a href="https://docs.nahara.io.vn" target="_blank">Documentations</a>
+            </div>
+        </div>
+        <div class="hide-in-print">
+            <div>
+                <span class="label">Social</span>
+                <a href="https://codeberg.org/nahara" target="_blank">Codeberg</a>
+                <a href="https://github.com/Nahara-OSS" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </main>
+</footer>
+
+<style>
+    footer {
+        background-color: var(--theme-container-md);
+        border-top: 0.1em solid var(--theme-outline-lo);
+        break-inside: avoid;
+
+        > main {
+            margin-inline: auto;
+            max-width: 1600px;
+            padding: 2em;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            column-gap: 2em;
+            row-gap: 2em;
+            box-sizing: border-box;
+
+            > .wide {
+                grid-column: span 2;
+            }
+
+            > div {
+                .muted {
+                    color: var(--theme-muted);
+                }
+
+                p {
+                    line-height: 1.2;
+                }
+
+                > .cc-badges {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 0.25em;
+                }
+
+                > div {
+                    margin-block-end: 2em;
+
+                    > .label {
+                        margin-block-end: 0.5em;
+                        color: var(--theme-muted);
+                        font-weight: 600;
+                    }
+
+                    > strong,
+                    > span,
+                    > a {
+                        display: block;
+                        line-height: 1.2;
+                    }
+
+                    > a {
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+
+    @media print {
+        footer > main {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        .hide-in-print {
+            display: none;
+        }
+    }
+</style>
