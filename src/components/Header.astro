@@ -32,6 +32,7 @@ import SketchpadLogo from "../images/sketchpad.svg";
                 </div>
             </div>
         </HeaderMenu>
+        <HeaderMenu href="/blog" label="Blog" />
         <HeaderMenu href="/about" label="About" />
     </main>
 </header>
@@ -42,7 +43,7 @@ import SketchpadLogo from "../images/sketchpad.svg";
 
     let queuedCheck = false;
 
-    document.addEventListener("scroll", (e) => {
+    document.addEventListener("scroll", () => {
         if (queuedCheck) return;
         queuedCheck = true;
         requestAnimationFrame(checkScroll);
@@ -61,6 +62,8 @@ import SketchpadLogo from "../images/sketchpad.svg";
             else header.classList.remove("docked");
         }
     }
+
+    checkScroll();
 </script>
 
 <style>

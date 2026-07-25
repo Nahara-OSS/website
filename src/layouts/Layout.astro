@@ -7,9 +7,11 @@ import Header from "../components/Header.astro";
 const {
     title,
     description,
+    keywords,
 }: {
     title?: string;
     description?: string;
+    keywords?: string;
 } = Astro.props;
 ---
 
@@ -25,6 +27,7 @@ const {
             content={description ??
                 "This is a page in Nahara's Organization website. Appearently we haven't provided a description yet."}
         />
+        {keywords != null ? <meta name="keywords" content={keywords} /> : null}
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>{title ?? "Nahara's Organization"}</title>
