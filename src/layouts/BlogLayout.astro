@@ -158,6 +158,7 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
                 padding-inline: 2em;
             }
 
+            svg,
             img {
                 position: relative;
                 width: calc(100% - 8em);
@@ -168,6 +169,10 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
                 box-sizing: border-box;
                 border: 0.1em solid var(--theme-outline-lo);
                 display: block;
+            }
+
+            svg.flowchart {
+                background-color: #ffffff;
             }
         }
     }

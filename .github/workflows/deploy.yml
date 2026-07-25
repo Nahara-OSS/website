@@ -13,6 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - name: Install dependencies
+        run: pnpm ci
+      - name: Install Playwright Browsers
+        run: pnpx playwright install --with-deps
       - uses: withastro/action@v6
   deploy:
     needs: build
