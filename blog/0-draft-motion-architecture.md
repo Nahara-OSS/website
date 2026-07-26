@@ -120,6 +120,69 @@ It is worth mentioning that parent doesn't have to render the children at all. I
 children can do nothing if the render target type is invalid, or render when the type is correct, as it is possible that
 the parent want to pass multiple targets to children, such as passing transformable target and then framebuffer target.
 
+### Selectable target
+
+Complex object with multiple parts may have some of the parts be modified independently from each other. For example, a
+text object consists of multiple words and characters, and you want to scale the first character of each word by 120%.
+In order to apply transform modifier only on those characters, you would have to tell the text object that you only want
+to affect those parts, and then the parent would pass new render targets that only affect the selected parts.
+
+```mermaid
+graph TD;
+    parent["Text"]
+    selector["Selector: 1st level 1 element of every level 2 elements"]
+    modifier["Transform Modifier"]
+
+    parent -- SelectableTarget --> selector
+    selector -- TransformableTarget --> modifier
+```
+
+The concept of selectable target can be modeled like the TypeScript types below:
+
+```typescript
+interface SelectableTarget extends RenderTarget {
+    targetsFor(selection: Selection): Iterable<RenderTarget>
+}
+
+// Select a range of elements
+// This is much more simplified than the actual `Selection` interface, which
+// also concerns with step size and selecting parts with percentages.
+interface Selection {
+    level: number
+    start: number // inclusive, use -Infinity to select from the start
+    end: number // exclusive, use +Infinity to select to the end
+    each: Selection | null
+}
+```
+
+So from example, if we want to select the first character of every single word, we would have to create a selection
+that select all words first, then inside each word, we select only the first character, like this:
+
+```typescript
+const selection: Selection = {
+    level: 2, // We select all words...
+    start: -Infinity,
+    end: Infinity,
+    each: { // ...then for each word...
+        level: 1, // ...we only select the first character
+        start: 0,
+        end: 1,
+        each: null
+    }
+}
+```
+
+And to actually scale the character up, we would have to obtain the render targets that are associated with our
+selection:
+
+```typescript
+const target: SelectableTarget
+
+target.targetsFor(selection, target => {
+    renderChildren(target) // pass it to modifier
+})
+```
+
 ## Render environment
 
 Render environment is a collection of resources that the renderer can access. We have to specify the environment that
