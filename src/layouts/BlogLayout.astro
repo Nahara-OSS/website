@@ -26,39 +26,48 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
 ---
 
 <Layout title={title} description={brief} keywords={tags?.join(", ")}>
-    <div class="table-of-content">
-        <h1>Table of content</h1>
-        {
-            headings.map(({ text, slug, depth }) => (
-                <a href={"#" + slug} style={`--depth: ${depth}`}>
-                    {text}
-                </a>
-            ))
-        }
+    <div class="blog">
+        <article>
+            <header>
+                <h1>{title}</h1>
+                <p>{brief}</p>
+                <div class="meta">
+                    <span class="author">{author}</span>
+                    <span>&mid;</span>
+                    <span class="publish-date">{publishedOn != null ? timeFormatter.format(publishedOn) : "Draft"}</span
+                    >
+                </div>
+            </header>
+            <main>
+                <slot />
+            </main>
+        </article>
+        <div class="table-of-content">
+            <h1>Table of content</h1>
+            {
+                headings.map(({ text, slug, depth }) => (
+                    <a href={"#" + slug} style={`--depth: ${depth}`}>
+                        {text}
+                    </a>
+                ))
+            }
+        </div>
     </div>
-    <article>
-        <header>
-            <h1>{title}</h1>
-            <p>{brief}</p>
-            <div class="meta">
-                <span class="author">{author}</span>
-                <span>&mid;</span>
-                <span class="publish-date">{publishedOn != null ? timeFormatter.format(publishedOn) : "Draft"}</span>
-            </div>
-        </header>
-        <main>
-            <slot />
-        </main>
-    </article>
 </Layout>
 
 <style>
-    article {
+    .blog {
+        display: grid;
+        grid-template-columns: 4fr 1fr;
+        max-width: 1200px;
         margin-inline: auto;
-        margin-block-start: 8em;
-        margin-block-end: 1em;
-        max-width: 1000px;
-        padding: 2em;
+        gap: 2em;
+        margin-block-start: 12em;
+        padding-block-end: 2em;
+    }
+
+    article {
+        margin-inline: 2em;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -90,7 +99,6 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
 
         > main {
             line-height: 1.4;
-            text-align: justify;
             counter-reset: heading;
             padding-block-start: 2em;
 
@@ -128,6 +136,7 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
 
             p {
                 margin-block: 1em;
+                text-align: justify;
             }
 
             ul,
@@ -150,6 +159,7 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
                     left: 0;
                     top: 0;
                     background-color: var(--theme-outline-lo);
+                    print-color-adjust: exact;
                 }
             }
 
@@ -178,12 +188,11 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
     }
 
     .table-of-content {
-        position: fixed;
+        position: sticky;
+        top: 6em;
+        height: fit-content;
         display: flex;
         flex-direction: column;
-        top: 12em;
-        right: 2em;
-        width: 200px;
         gap: 0.5em;
 
         > h1 {
@@ -201,14 +210,19 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
         }
     }
 
-    @media (max-width: 1600px) {
+    @media (max-width: 1200px) {
+        .blog {
+            display: block;
+            max-width: 1000px;
+        }
+
         .table-of-content {
             display: none;
         }
     }
 
     @media print {
-        article {
+        .blog {
             margin-block-start: 2em;
         }
     }
