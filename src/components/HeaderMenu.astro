@@ -33,6 +33,7 @@ const { href = "#", label } = Astro.props;
             box-sizing: border-box;
 
             &:hover {
+                color: var(--theme-foreground);
                 background-color: var(--theme-control-md);
                 border-color: var(--theme-outline-md);
             }
@@ -41,6 +42,7 @@ const { href = "#", label } = Astro.props;
         > .extra {
             display: none;
             position: absolute;
+            color: var(--theme-foreground);
             background-color: var(--theme-container-lo);
             left: calc(anchor(--menu-button left) - 1em);
             top: calc(anchor(--menu-button bottom) - 0.1em);
@@ -56,6 +58,7 @@ const { href = "#", label } = Astro.props;
         &:has(.extra > main > *):hover,
         &:has(.extra > main > *):focus-within {
             > a {
+                color: var(--theme-foreground);
                 background-color: var(--theme-control-lo);
                 border-color: var(--theme-outline-md);
             }

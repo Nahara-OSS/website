@@ -3,9 +3,15 @@ import HeaderMenu from "./HeaderMenu.astro";
 import Logo from "../images/logo.svg";
 import MotionLogo from "../images/motion.svg";
 import SketchpadLogo from "../images/sketchpad.svg";
+
+export interface Props {
+    color?: string;
+}
+
+const { color } = Astro.props;
 ---
 
-<header>
+<header style={{ color }}>
     <main>
         <a href="/" class="logo" title="Homepage">
             <Logo width={32} height={32} />
@@ -76,7 +82,8 @@ import SketchpadLogo from "../images/sketchpad.svg";
         border-bottom: 0.1em solid transparent;
         transition:
             0.1s linear background-color,
-            0.1s linear border-color;
+            0.1s linear border-color,
+            0.3s linear color;
 
         &.dynamic {
             position: fixed;
@@ -120,6 +127,7 @@ import SketchpadLogo from "../images/sketchpad.svg";
         &.docked {
             background-color: var(--theme-container-md);
             border-color: var(--theme-outline-lo);
+            color: inherit !important;
 
             > main > .logo {
                 width: 32px;

@@ -6,54 +6,149 @@ const posts = await getCollection("blog");
 const publishedPosts = posts
     .filter((post) => post.data.publishedOn != null)
     .sort((a, b) => a.data.publishedOn!.getTime() - b.data.publishedOn!.getTime());
+const locale = new Intl.Locale("en-US");
+const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeStyle: "long" });
 ---
 
-<Layout>
-    <div class="listing">
-        <header>
-            <h1>Blogs</h1>
-            <p>The layout is scuffed right now, but here are the blog posts</p>
-        </header>
+<Layout headerColor="#000000">
+    <link slot="head" rel="alternate" href="/blog/rss.xml" type="application/rss+xml" title="RSS" />
+    <div class="banner">
         <main>
-            {publishedPosts.map((post) => <a href={`/blog/${post.id}`}>{post.data.title}</a>)}
+            <h1>Blog</h1>
+            <div class="buttons">
+                <a href="/blog/rss.xml">RSS Feed</a>
+            </div>
         </main>
+    </div>
+    <div class="items">
+        {
+            publishedPosts.map((post) => (
+                <a href={`/blog/${post.id}`} class="post">
+                    <h1>{post.data.title}</h1>
+                    <p>{post.data.brief}</p>
+                    <div class="meta">
+                        <span class="author">{post.data.author}</span>
+                        <span>&mid;</span>
+                        <span class="publish-date">{timeFormatter.format(post.data.publishedOn)}</span>
+                    </div>
+                </a>
+            ))
+        }
     </div>
 </Layout>
 
 <style>
-    .listing {
-        margin-inline: auto;
-        margin-block-start: 8em;
-        margin-block-end: 1em;
-        max-width: 1000px;
-        padding: 2em;
+    .banner {
+        background: linear-gradient(15deg, #fff9f1, #fff0f0);
+        color: #000000;
+        overflow: hidden;
+        print-color-adjust: exact;
         box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-
-        > header {
-            display: flex;
-            flex-direction: column;
-            gap: 1em;
-            padding-block-end: 3em;
-            border-bottom: 0.1em solid var(--theme-outline-lo);
-
-            > h1 {
-                font-size: 2.5em;
-                margin: 0;
-            }
-
-            > p {
-                font-style: italic;
-                margin: 0;
-            }
-        }
+        padding-block-start: 4em;
 
         > main {
             display: flex;
-            flex-direction: column;
-            padding-block-start: 2em;
+            flex-direction: row;
+            justify-content: space-between;
+            max-width: 1200px;
+            padding-inline: 2em;
+            margin-inline: auto;
+            margin-block: 2em;
+            align-items: center;
+
+            > h1 {
+                margin: 0;
+                font-size: 4em;
+            }
+
+            > .buttons {
+                display: flex;
+                flex-direction: row;
+                gap: 0.2em;
+
+                > a {
+                    text-decoration: none;
+                    height: 2em;
+                    align-content: center;
+                    padding-inline: 0.6em;
+                    padding-block: 0.2em;
+                    box-sizing: border-box;
+                    border: 0.1em solid transparent;
+
+                    &:hover {
+                        color: var(--theme-foreground);
+                        background-color: var(--theme-control-md);
+                        border-color: var(--theme-outline-md);
+                    }
+
+                    &:active {
+                        color: var(--theme-foreground);
+                        background-color: var(--theme-control-hi);
+                        border-color: var(--theme-outline-hi);
+                    }
+                }
+            }
+        }
+    }
+
+    .items {
+        max-width: calc(1200px + 4em);
+        margin-inline: auto;
+        padding-block: 2em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+
+    a.post {
+        text-decoration: none;
+        border: 0.1em solid transparent;
+        background-color: var(--theme-control-lo);
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        box-sizing: border-box;
+        padding: 2em;
+        justify-content: end;
+
+        &:hover {
+            border-color: var(--theme-outline-md);
+            background-color: var(--theme-control-md);
+        }
+
+        &:active {
+            border-color: var(--theme-outline-hi);
+            background-color: var(--theme-control-hi);
+        }
+
+        > h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        > p {
+            font-style: italic;
+            margin: 0;
+        }
+
+        > .meta {
+            display: flex;
+            flex-direction: row;
             gap: 0.5em;
+            color: var(--theme-muted);
+        }
+    }
+    @media print {
+        .banner {
+            padding-block-start: 0;
+
+            > main > .buttons {
+                display: none;
+            }
+        }
+
+        .items {
+            padding-block: 0;
         }
     }
 </style>
