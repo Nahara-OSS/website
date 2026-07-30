@@ -223,7 +223,18 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
 
     @media print {
         .blog {
-            margin-block-start: 2em;
+            margin: 0;
+            margin-block-end: 1em;
+            max-width: unset;
+            display: block;
+        }
+
+        article {
+            margin: 0;
+        }
+
+        .table-of-content {
+            display: none;
         }
     }
 </style>
