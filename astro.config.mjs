@@ -22,5 +22,11 @@ export default defineConfig({
             weights: [300, 400, 500, 700, 800],
             fallbacks: ["sans-serif"],
         },
+        {
+            provider: fontProviders.google(),
+            name: "Noto Sans SC",
+            cssVariable: "--font-noto-cjk",
+            weights: [400],
+        },
     ],
 });
