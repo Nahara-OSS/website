@@ -184,6 +184,25 @@ const timeFormatter = new Intl.DateTimeFormat(locale, { dateStyle: "long", timeS
             svg.flowchart {
                 background-color: #ffffff;
             }
+
+            table {
+                border-spacing: 0;
+
+                thead {
+                    background-color: var(--theme-container-md);
+                }
+
+                tr:hover {
+                    background-color: var(--theme-container-md);
+                }
+
+                th,
+                td {
+                    border-bottom: 0.1em solid var(--theme-outline-lo);
+                    padding-block: 0.5em;
+                    padding-inline: 0.8em;
+                }
+            }
         }
     }
 
