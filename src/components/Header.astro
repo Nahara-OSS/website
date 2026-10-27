@@ -1,6 +1,6 @@
 ---
 import HeaderMenu from "./HeaderMenu.astro";
-import Logo from "../images/logo.svg";
+import Favicon from "../images/favicon.svg";
 import MotionLogo from "../images/motion.svg";
 import SketchpadLogo from "../images/sketchpad.svg";
 
@@ -14,7 +14,7 @@ const { color } = Astro.props;
 <header style={{ color }}>
     <main>
         <a href="/" class="logo" title="Homepage">
-            <Logo width={32} height={32} />
+            <Favicon width={32} height={32} />
             <span>Nahara's Organization</span>
         </a>
         <HeaderMenu href="/software" label="Software">
